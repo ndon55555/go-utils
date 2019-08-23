@@ -11,8 +11,10 @@ type HashSet struct {
 	internal map[interface{}]bool
 }
 
-func NewHashSet() *HashSet {
-	return &HashSet{internal: map[interface{}]bool{}}
+func NewHashSet(vals ...interface{}) *HashSet {
+	h := &HashSet{internal: map[interface{}]bool{}}
+	h.Add(vals...)
+	return h
 }
 
 func (h *HashSet) Add(vals ...interface{}) {
@@ -29,12 +31,12 @@ func (h *HashSet) Remove(vals ...interface{}) {
 
 func (h *HashSet) Contains(vals ...interface{}) bool {
 	for _, v := range vals {
-		if h.internal[v] {
-			return true
+		if !h.internal[v] {
+			return false
 		}
 	}
 
-	return false
+	return true
 }
 
 func (h *HashSet) Values() []interface{} {
